@@ -2,18 +2,22 @@
 
 /* Define a function `addFour()` that takes a single argument 
    and returns a value 4 greater than the input.*/
-
+function addFour(number) {
+  return number + 4; 
+}
    
 /* Create and log a variable `twelve` that is the result of passing 8 to your
    addFour() function. */
-
+let twelve = addFour(8);
+console.log(twelve);
    
 /* Create and log a variable `twelveString` that is the result of passing "8" 
    (a string) to your addFour() function. Consider what this tells you about how
   the function should be explained (e.g., in a comment). */
-
+/*the function returned value concatenated to a string*/
+let twelveString = addFour('8');
+console.log(twelveString);
   
-
 /* Define a function `compoundInterest()` that takes three parameters: 
      1. an initial bank balance (principle, in dollars)
      2. an annual interest rate (as a decimal, e.g., 0.01) 
@@ -25,9 +29,13 @@
    You can call the method and log the result to check your work. Compare to
      http://www.mathwarehouse.com/calculators/continuous-compound-interest-calculator.php
 */
-
-
-
+/* uses compound interest formula and rounds to two decimal places*/
+function compoundInterest(principle, interest, time) {
+  return Math.round(principle * Math.pow(Math.E, interest * time) * 100) / 100; /*https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/E*/
+}
+let test = compoundInterest(100, .01, 5);
+console.log(test);
+console.log(typeof(test));
 /* Define a function `fizzBuzz()` that takes in a single number as an argument.
    The function should *return* an _array_ of numbers from 1 to the argument. 
    But for multiples of three, the array should contain "Fizz" instead of the 
@@ -35,8 +43,23 @@
    number. For numbers which are multiples of both three and five, the array 
    should contain "FizzBuzz" instead of the number.
    The returned array should be empty for arguments less than 1. */
+function fizzBuzz(number) {
+  let array = [];
+  for(let i=1; array.length < number; i++) {
+    if(i % 3 == 0 && i % 5 == 0) {
+      array.push('FizzBuzz');
+    }else if(i % 3 == 0) {
+      array.push('Fizz');
+    }else if(i % 5 == 0) {
+      array.push('Buzz');
+    }else {
+    array.push(i);
+    }
+  }
+  return array;
+}
+console.log(fizzBuzz(15));
 
-   
 
 /* Define a function `getLetterFrequencies()` that takes in a single string as 
    an argument. The function should *return* an Object whose keys are characters
@@ -47,7 +70,18 @@
    each letter, increase the value associated with that key by one. Watch out 
    for if the letter is not in the Object yet!
    You can test this method with a word like "Mississippi". */
-
+function getLetterFrequencies(word) {
+  let obj = {};
+  for(let i=0; i < word.length; i++) {
+    if(obj[word[i]] == undefined) {
+      obj[word[i]] = 1;
+    } else {
+      obj[word[i]] = obj[word[i]] + 1;
+    }
+  }
+  return obj;
+}
+console.log(getLetterFrequencies('Mississippi'));
    
 
 /* Create a variable `deck` that represents a deck of modern playing cards
@@ -61,29 +95,66 @@
     the `deck` array! 
     
     You can log out the `deck` to check your work! */
+//let deck = [];
+let suits = ['hearts', 'diamonds', 'clubs', 'spades'];
+let rank = [2,3,4,5,6,7,8,9,10,11,12,13,14];
+let deck = [];
 
-    
+  for(let i = 0; i < suits.length; i++) {
+    for(let j = 0; j < rank.length; j++) {
+      let card = {suit: suits[i], rank: rank[j]};
+      deck.push(card);
+    }
+  }
+console.log(deck);
+
 
 //You can test the below functions by creating e.g., a `pokerHand` array that 
 //contains five cards from the `deck`.
-
+let pokerHand = [{suit: 'hearts', rank: 2}, {suit: 'hearts', rank: 9},{suit: 'hearts', rank: 4}, {suit: 'hearts', rank: 5}, {suit: 'spades', rank: 14}];
+console.log(pokerHand);
 /* Define a function `containsQueenOfHearts()` that takes in an array of "card"
    objects (e.g., a Poker hand) and returns whether or not the Queen of Hearts
    is in that array.
    Hint: use a loop to check each card. */
-
-   
+function containsQueenOfHearts(hand) {
+  for(let i=0; i<hand.length; i++) {
+    if(hand[i].rank == 12 && hand[i].suit == 'hearts') { //checks for queen of hearts//
+      return true;
+    }
+  }
+  return false;
+}
+console.log(containsQueenOfHearts(pokerHand));
 
 /* Define a function `getHighCard()` that takes in an array of "card" objects
   and returns the card object with the highest value. The "high card" is the one
   with the highest rank. Cards of different suits but the same rank are 
   considered to have the same value, and either is a valid result */
-
-  
+function getHighCard(hand) {
+  let high = {rank: 2};
+  for(let i=0; i<hand.length; i++) {
+    if(high.rank < hand[i].rank) {
+      high = {rank: hand[i].rank, suit: hand[i].suit}; //new high card replaces old one
+    }
+  }
+  return high;
+}
+console.log(getHighCard(pokerHand));
 
 /* Define a function `isFlush()` that takes in an array of "card" objects and
    returns whether or not the cards all have the same _suit_. */
-
+function isFlush(hand) {
+  let flush = true; 
+  let sameSuit = hand[0].suit;
+  for(let i=0; i<hand.length; i++) {
+    if(hand[i].suit != sameSuit) { //if suit doesn't match then it's not flush
+      flush = false;
+    }
+  }
+  return flush;
+}
+console.log(isFlush(pokerHand));
    
 
 /* Extra challenge: define a function `hasPair()` that takes in an array of 
